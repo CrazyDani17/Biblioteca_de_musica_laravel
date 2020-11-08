@@ -1,0 +1,40 @@
+models:
+ Models/Sector:
+  name: string unique
+  description: text nullable
+  relationships:
+   hasMany: Customer
+ Models/Customer:
+  name: string unique
+  ruc: string unique
+  manager: string nullable
+  number_phone: string nullable
+  sector_id: id foreign:sectors
+  user_id: id foreign:users
+  relationships:
+   hasMany: Address
+   hasOne: User
+ Models/Address:
+  customer_id: id foreign:customers
+  address: string
+  relationships:
+   hasMany: Manifest
+   belongsTo: Customer
+ Models/Document_type:
+  name: string unique
+  description: text nullable
+  relationships:
+   hasMany: Manifest
+ Models/Manifest:
+  code: string unique
+  create_date: date
+  pick_up_date: date nullable
+  file: text
+  document_type_id: id foreign:document_types
+  customer_id: id foreign:customer
+  address_id: id foreign:addresses
+  user_id: id foreign:users
+  relationships:
+   belongsTo: User, Address,Document_type, Customer
+
+seeders: Sector, Customer, Address, Document_type, Manifest

@@ -1,0 +1,27 @@
+created:
+    - database/migrations/2020_08_08_034609_create_sectors_table.php
+    - database/migrations/2020_08_08_034610_create_customers_table.php
+    - database/migrations/2020_08_08_034611_create_addresses_table.php
+    - database/migrations/2020_08_08_034612_create_document_types_table.php
+    - database/migrations/2020_08_08_034613_create_manifests_table.php
+    - app/Models/Sector.php
+    - app/Models/Customer.php
+    - app/Models/Address.php
+    - app/Models/Document_type.php
+    - app/Models/Manifest.php
+    - database/factories/Models/SectorFactory.php
+    - database/factories/Models/CustomerFactory.php
+    - database/factories/Models/AddressFactory.php
+    - database/factories/Models/DocumentTypeFactory.php
+    - database/factories/Models/ManifestFactory.php
+    - database/seeds/SectorSeeder.php
+    - database/seeds/CustomerSeeder.php
+    - database/seeds/AddressSeeder.php
+    - database/seeds/Document_typeSeeder.php
+    - database/seeds/ManifestSeeder.php
+models:
+    Models/Sector: { name: 'string unique', description: 'text nullable', relationships: { hasMany: Customer } }
+    Models/Customer: { name: string, ruc: 'string unique', manager: 'string nullable', number_phone: 'string nullable', sector_id: 'id foreign:sectors', user_id: 'id foreign:users', relationships: { hasMany: Address, hasOne: User } }
+    Models/Address: { customer_id: 'id foreign:customers', address: string, relationships: { hasMany: Manifest, belongsTo: Customer } }
+    Models/Document_type: { name: string, description: 'text nullable', relationships: { hasMany: Manifest } }
+    Models/Manifest: { code: 'string unique', create_date: date, pick_up_date: 'date nullable', file: text, document_type_id: 'id foreign:document_types', address_id: 'id foreign:addresses', user_id: 'id foreign:users', relationships: { belongsTo: 'User, Address,Document_type' } }
